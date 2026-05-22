@@ -126,14 +126,14 @@ EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 EnvelopeSummary result = envelopesApi.createEnvelope(accountId, envelopeDefinition);
 ```
 
-### BoldSign: API Key (simplest) or OAuth 2.0
+### BoldSign: API Key or OAuth 2.0
 
 ```java
 import com.boldsign.ApiClient;
 import com.boldsign.api.DocumentApi;
 import com.boldsign.model.*;
 
-// BoldSign — API Key auth (simplest for server-to-server)
+// BoldSign — API Key auth
 ApiClient client = Configuration.getDefaultApiClient();  
 client.setApiKey("Your-API-Key-Here");
 
@@ -144,7 +144,7 @@ DocumentCreated result = documentApi.sendDocument(sendForSign);
 ```
 
 ```java
-// BoldSign — OAuth 2.0 (for user-delegated access)
+// BoldSign — OAuth 2.0
 ApiClient client = Configuration.getDefaultApiClient();
 client.setAccessToken("Your-Bearer-Token-Here");
 
@@ -1043,10 +1043,19 @@ docusign.base.path=https://demo.docusign.net/restapi
 
 ### BoldSign application.properties
 
+OAuth 2.0 Configuration
+```properties
+boldsign.client.id=your_boldsign_client_id
+boldsign.client.secret=your_boldsign_client_secret
+boldsign.webhook.secret=your_webhook_secret_here
+boldsign.base.url=your_regional_base_url
+```
+
+API Key Configuration
 ```properties
 boldsign.api.key=your_api_key_here
 boldsign.webhook.secret=your_webhook_secret_here
-boldsign.base.url=https://api.boldsign.com
+boldsign.base.url=your_regional_base_url
 ```
 
 ---
@@ -1093,7 +1102,7 @@ public <T> T callWithRetry(Supplier<T> fn, int maxRetries) {
 ### Phase 1: Setup
 - [ ] Create BoldSign Sandbox account (https://account.boldsign.com/signup?planId=1076)
 - [ ] Replace Maven dependency: `com.boldsign:boldsign-java` (not `boldsign-java-sdk`)
-- [ ] Replace authentication: Detect DocuSign auth method. If accessToken or Bearer is used then use BoldSign OAuth. Do not switch to API Key unless it is explicitly mentioned.
+- [ ] Configure Auth & Environment: Detect your DocuSign auth method. If accessToken or Bearer is used, use BoldSign OAuth (Update configuration migration with client ID and client secret). Do not switch to API Key unless it is explicitly mentioned.
 - [ ] Update base URL configuration
 - [ ] Remove all `accountId` references from API calls
 

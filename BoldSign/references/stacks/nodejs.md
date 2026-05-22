@@ -125,13 +125,13 @@ const result = await envelopesApi.createEnvelope(accountId, {
 });
 ```
 
-### BoldSign: API Key (simplest) or OAuth 2.0
+### BoldSign: API Key or OAuth 2.0
 
 ```typescript
 import { DocumentApi } from 'boldsign';
 import 'dotenv/config';
 
-// BoldSign — API Key auth (simplest for server-to-server)
+// BoldSign — API Key auth
 const documentApi = new DocumentApi();
 documentApi.setApiKey("YOUR_API_KEY");
 
@@ -140,7 +140,7 @@ const result = await documentApi.sendDocument(sendForSign);
 ```
 
 ```typescript
-// BoldSign — OAuth 2.0 (for user-delegated access)
+// BoldSign — OAuth 2.0
 const documentApi = new DocumentApi();
 documentApi.setAccessToken("YOUR_ACCESS_TOKEN");
 ```
@@ -983,10 +983,19 @@ DOCUSIGN_BASE_PATH=https://demo.docusign.net/restapi
 
 ### BoldSign .env
 
+OAuth 2.0 Configuration
+```env
+BOLDSIGN_CLIENT_ID=your_boldsign_client_id
+BOLDSIGN_CLIENT_SECRET=your_boldsign_client_secret
+BOLDSIGN_BASE_URL=your_regional_base_url
+BOLDSIGN_WEBHOOK_SECRET=your_webhook_secret_here
+```
+
+API Key Configuration
 ```env
 BOLDSIGN_API_KEY=your_api_key_here
 BOLDSIGN_WEBHOOK_SECRET=your_webhook_secret_here
-BOLDSIGN_BASE_URL=https://api.boldsign.com
+BOLDSIGN_BASE_URL=your_regional_base_url
 ```
 
 ---
@@ -1031,7 +1040,7 @@ export async function callWithRetry<T>(
 ### Phase 1: Setup
 - [ ] Create BoldSign Sandbox account (https://account.boldsign.com/signup?planId=1076)
 - [ ] Replace npm package: `npm install boldsign`
-- [ ] Replace authentication: Detect DocuSign auth method. If accessToken or Bearer is used then use BoldSign OAuth. Do not switch to API Key unless it is explicitly mentioned.
+- [ ] Configure Auth & Environment: Detect your DocuSign auth method. If accessToken or Bearer is used, use BoldSign OAuth (Update configuration migration with client ID and client secret). Do not switch to API Key unless it is explicitly mentioned.
 - [ ] Update base URL configuration
 - [ ] Remove all `accountId` references from API calls
 

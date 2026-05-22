@@ -124,11 +124,11 @@ envelopes_api = EnvelopesApi(api_client)
 result = envelopes_api.create_envelope(account_id, envelope_definition)
 ```
 
-### BoldSign: API Key (simplest) or OAuth 2.0
+### BoldSign: API Key or OAuth 2.0
 
 ```python
 
-# BoldSign — API Key auth (simplest for server-to-server)
+# BoldSign — API Key auth
 import boldsign
 configuration = boldsign.Configuration(api_key="YOUR_API_KEY")
 with boldsign.ApiClient(configuration) as api_client:
@@ -140,7 +140,7 @@ result = document_api.send_document(send_for_sign)
 ```
 
 ```python
-# BoldSign — OAuth 2.0 (for user-delegated access)
+# BoldSign — OAuth 2.0
 configuration = boldsign.Configuration(access_token="Your-Bearer-Token-Here")
 with boldsign.ApiClient(configuration) as api_client:
 
@@ -1016,10 +1016,19 @@ DOCUSIGN_BASE_PATH=https://demo.docusign.net/restapi
 
 ### BoldSign .env
 
+OAuth 2.0 Configuration
+```env
+BOLDSIGN_CLIENT_ID=your_boldsign_client_id
+BOLDSIGN_CLIENT_SECRET=your_boldsign_client_secret
+BOLDSIGN_BASE_URL=your_regional_base_url
+BOLDSIGN_WEBHOOK_SECRET=your_webhook_secret_here
+```
+
+API Key Configuration
 ```env
 BOLDSIGN_API_KEY=your_api_key_here
 BOLDSIGN_WEBHOOK_SECRET=your_webhook_secret_here
-BOLDSIGN_BASE_URL=https://api.boldsign.com
+BOLDSIGN_BASE_URL=your_regional_base_url
 ```
 
 ---
@@ -1121,7 +1130,7 @@ if __name__ == '__main__':
 ### Phase 1: Setup
 - [ ] Create BoldSign Sandbox account (https://account.boldsign.com/signup?planId=1076)
 - [ ] Replace pip package: `pip install boldsign`
-- [ ] Replace authentication: Detect DocuSign auth method. If accessToken or Bearer is used then use BoldSign OAuth. Do not switch to API Key unless it is explicitly mentioned.
+- [ ] Configure Auth & Environment: Detect your DocuSign auth method. If accessToken or Bearer is used, use BoldSign OAuth (Update configuration migration with client ID and client secret). Do not switch to API Key unless it is explicitly mentioned.
 - [ ] Update base URL configuration
 - [ ] Remove all `account_id` parameters from API calls
 
